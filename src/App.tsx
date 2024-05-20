@@ -1,10 +1,15 @@
 import './App.css';
-import Card from './components/Card/Card';
+import CardDeck from './lib/CardDeck';
 
-const App = () => (
-  <>
-    <Card rank={'j'} suit={'hearts'}/>
-  </>
-);
+const App: React.FC = () => {
+  const deck = new CardDeck();
+  deck.getCard();
+  deck.getCards(5);
+
+  return (
+    <>
+    </>
+  );
+};
 
 export default App;
