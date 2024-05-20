@@ -6,7 +6,7 @@ export default class CardDeck {
   constructor() {
     this.cards = [];
     const suits = ['hearts', 'diams', 'clubs', 'spades'];
-    const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
 
     for (const suit of suits) {
       for (const rank of ranks) {

@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import './App.css';
 import Card from './components/Card/Card';
 import CardDeck from './lib/CardDeck';
+import PokerHand from './lib/PokerHand';
 
 const App: React.FC = () => {
   const [deck, setDeck] = useState(new CardDeck());
   const [cards, setCards] = useState<{ rank: string; suit: string }[]>([]);
   const [remainingCards, setRemainingCards] = useState(52);
-  const [gameEnd, setGameEnd] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [buttonWidth, setButtonWidth] = useState<number | string>('auto');
 
   const drawCards = (howMany: number) => {
     try {
@@ -21,7 +23,7 @@ const App: React.FC = () => {
       setRemainingCards(deck.getRemainingCardsCount());
 
       if (deck.getRemainingCardsCount() === 0) {
-        setGameEnd(true);
+        setGameOver(true);
       }
 
       setGameStarted(true);
@@ -34,21 +36,39 @@ const App: React.FC = () => {
     setDeck(new CardDeck());
     setCards([]);
     setRemainingCards(52);
-    setGameEnd(false);
+    setGameOver(false);
     setGameStarted(false);
+    setButtonWidth('auto');
   };
+
+  const handleButtonClick = () => {
+    if (gameOver) {
+      restartGame();
+      return;
+    }
+
+    drawCards(5);
+    setButtonWidth('fit-content');
+  };
+
+  const currentHand = gameStarted ? new PokerHand(cards).getOutcome() : 'Не найдена';
 
   return (
     <>
       <p>{!gameStarted ? 'Нажмите на кнопку ниже, чтобы получить карты' : `Кол-во карт: ${remainingCards}`}</p>
       <div className="cards-block">
         {!gameStarted
-          ? Array.from({length: 5}, (_, index) => <Card rank="back" suit="back" key={index}/>)
-          : cards.map((card, index) => <Card rank={card.rank} suit={card.suit} key={index}/>)
+          ? Array.from({length: 5}, (_, index) => <Card key={index} rank="back" suit="back"/>)
+          : cards.map((card, index) => <Card key={index} rank={card.rank} suit={card.suit}/>)
         }
       </div>
-      <button onClick={gameEnd ? restartGame : () => drawCards(5)}>
-        {gameEnd ? 'Начать игру заново' : 'Раздать карты'}
+      <p>{`Текущая комбинация: ${currentHand}`}</p>
+      <button
+        className="button-expand"
+        style={{width: buttonWidth}}
+        onClick={handleButtonClick}
+      >
+        {gameOver ? 'Начать игру заново' : 'Раздать карты'}
       </button>
     </>
   );
