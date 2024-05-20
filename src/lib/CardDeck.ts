@@ -1,7 +1,7 @@
 import Card from './Card';
 
 export default class CardDeck {
-  public cards: Card[];
+  private cards: Card[];
 
   constructor() {
     this.cards = [];
@@ -20,9 +20,7 @@ export default class CardDeck {
       throw new Error('Карт не осталось!');
     }
     const randomIndex = Math.floor(Math.random() * this.cards.length);
-    const removedCard = this.cards.splice(randomIndex, 1)[0];
-    console.log(removedCard);
-    return removedCard;
+    return this.cards.splice(randomIndex, 1)[0];
   }
 
   getCards(howMany: number): Card[] {
@@ -34,5 +32,9 @@ export default class CardDeck {
       drawnCards.push(this.getCard());
     }
     return drawnCards;
+  }
+
+  getRemainingCardsCount(): number {
+    return this.cards.length;
   }
 }
