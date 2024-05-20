@@ -1,11 +1,10 @@
 import './App.css';
+import Card from './components/Card/Card';
 
-function App() {
-
-  return (
-    <>
-    </>
-  );
-}
+const App = () => (
+  <>
+    <Card rank={'j'} suit={'hearts'}/>
+  </>
+);
 
 export default App;
