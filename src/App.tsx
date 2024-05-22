@@ -10,7 +10,6 @@ const App: React.FC = () => {
   const [remainingCards, setRemainingCards] = useState(52);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [buttonWidth, setButtonWidth] = useState<number | string>('auto');
 
   const drawCards = (howMany: number) => {
     try {
@@ -38,7 +37,6 @@ const App: React.FC = () => {
     setRemainingCards(52);
     setGameOver(false);
     setGameStarted(false);
-    setButtonWidth('auto');
   };
 
   const handleButtonClick = () => {
@@ -48,7 +46,6 @@ const App: React.FC = () => {
     }
 
     drawCards(5);
-    setButtonWidth('fit-content');
   };
 
   const currentHand = gameStarted ? new PokerHand(cards).getOutcome() : 'Не найдена';
@@ -65,7 +62,6 @@ const App: React.FC = () => {
       <p>{`Текущая комбинация: ${currentHand}`}</p>
       <button
         className="button-expand"
-        style={{width: buttonWidth}}
         onClick={handleButtonClick}
       >
         {gameOver ? 'Начать игру заново' : 'Раздать карты'}
