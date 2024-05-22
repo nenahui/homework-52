@@ -49,13 +49,17 @@ const App: React.FC = () => {
   };
 
   const currentHand = gameStarted ? new PokerHand(cards).getOutcome() : 'Не найдена';
+  const backCards = [];
+  for (let i = 0; i < 5; i++) {
+    backCards.push(<Card key={i} rank="back" suit="back"/>);
+  }
 
   return (
     <>
       <p>{!gameStarted ? 'Нажмите на кнопку ниже, чтобы получить карты' : `Кол-во карт: ${remainingCards}`}</p>
       <div className="cards-block">
         {!gameStarted
-          ? Array.from({length: 5}, (_, index) => <Card key={index} rank="back" suit="back"/>)
+          ? backCards
           : cards.map((card, index) => <Card key={index} rank={card.rank} suit={card.suit}/>)
         }
       </div>
